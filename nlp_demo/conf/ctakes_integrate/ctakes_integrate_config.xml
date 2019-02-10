@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configurations> 
+  <import> 
+    <documents> 
+      <corpusDir memo="the directory that stores the txt files" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">data/input</corpusDir>  
+      <includeFileTypes memo="filter files by extension names (separate by comma). If not filter defined, all files will be read">txt</includeFileTypes> 
+    </documents>  
+    <excelData> 
+      <filePath memo="The excel file that store the txt data" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser">../../../Desktop/n2c2/test.xlsx</filePath>  
+      <sheetName memo="The excel sheet name that you want to import. Default is Sheet1 ">Sheet1</sheetName>  
+      <docNameColumnPos memo="The position of document name column (A is 1, B is 2...)">1</docNameColumnPos>  
+      <docTxtColumnPos memo="The position of document text column (A is 1, B is 2...)">2</docTxtColumnPos>  
+      <docDateColumnPos memo="The position of document date column (A is 1, B is 2... if don't have a date column, leave it as -1)">3</docDateColumnPos>  
+      <startRowNum memo="Start to import from row #(you need to skip header columns, if there is any)">2</startRowNum> 
+    </excelData>  
+    <annotations memo="support Brat and eHOST format, the format will be automatically detected."> 
+      <projectDir memo="the directory that hosts the eHOST project" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">../../../../N2C2/train</projectDir>  
+      <includeAnnotationTypes>Concept, Doc_Base</includeAnnotationTypes>  
+      <enableSentenceSnippet>true</enableSentenceSnippet>  
+      <overWriteAnnotatorName memo="if a name is set, all the annotations' annotator will be overwritten by this name">gold</overWriteAnnotatorName> 
+    </annotations>  
+    <ontology> 
+      <owlFile memo="ontology owl file" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser">conf/test/colonoscopyQuality.owl</owlFile>  
+      <exportDir memo="the directory to export the rule files" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">conf</exportDir> 
+    </ontology>  
+    <executes> 
+      <ImportDocuments memo="Import corpus to database">edu.utah.bmi.simple.gui.task.Import txt</ImportDocuments>  
+      <ImportExcelData memo="Import excel corpus to database">edu.utah.bmi.simple.gui.task.ImportExcelTxt</ImportExcelData>  
+      <ViewImportedDocs memo="View the imported files in database">edu.utah.bmi.simple.gui.task.ViewImportDB</ViewImportedDocs>  
+      <ImportAnnotations memo="Import annotations into the output table">edu.utah.bmi.simple.gui.task.Import anno</ImportAnnotations>  
+      <ViewImportedAnnotations memo="View the imported annotations in database">edu.utah.bmi.simple.gui.task.ViewOutputDB ref</ViewImportedAnnotations>  
+      <ImportOntology memo="Convert the ontology file  into excel rule Files">edu.utah.bmi.simple.gui.task.ImportOntology</ImportOntology> 
+    </executes> 
+  </import>  
+  <easycie> 
+    <pipeLineSetting> 
+      <AesDir memo="ctakes AE descriptor directory (ordered by file names)" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">desc/nlp_aes</AesDir>  
+      <Section_Detector> 
+        <RuleFileOrStr memo="section detector rule file" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_section.xlsx</RuleFileOrStr> 
+      </Section_Detector>  
+      <RuSH> 
+        <RuleFileOrStr memo="sentence segmentation rules" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_rush.xlsx</RuleFileOrStr>  
+        <TokenTypeName memo="Token annotation type, leave it blank will not perform tokenization"/> 
+      </RuSH>  
+      <UmlsLookupAnnotator> 
+        <DictionaryDescriptor memo="which dictionary to use">org/apache/ctakes/dictionary/lookup/fast/cust_condition_wo_findings.xml</DictionaryDescriptor> 
+      </UmlsLookupAnnotator>  
+      <NERCoordinator> 
+        <RuleFileOrStr memo="NER coordinator rules (check overlapped annotations, keep the widest ones)" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_coordinator.xlsx</RuleFileOrStr> 
+      </NERCoordinator>  
+      <TypeTranslator> 
+        <RuleFileOrStr memo="translate cTAKES annotations to EasyCIE annotations" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_translatorInf.xlsx</RuleFileOrStr> 
+      </TypeTranslator>  
+      <TemporalAnnotator> 
+        <RuleFileOrStr memo="Annotate and normalize date mentions" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_date.tsv</RuleFileOrStr> 
+      </TemporalAnnotator>  
+      <FastContext> 
+        <RuleFileOrStr memo="Context detection" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_context.xlsx</RuleFileOrStr> 
+      </FastContext>  
+      <FeatureInferencer> 
+        <RuleFileOrStr memo="Infer annotation types based on modifiers" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_featureInf.xlsx</RuleFileOrStr> 
+      </FeatureInferencer>  
+      <AnnotationCleaner> 
+        <RuleFileOrStr memo="List the annotations to keep in Jcas" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_cleaner.xlsx</RuleFileOrStr>  
+        <IncludeSubtypes>true</IncludeSubtypes> 
+      </AnnotationCleaner>  
+      <TypeTranslator2> 
+        <RuleFileOrStr memo="translate EasyCIE annotations to  cTAKES annotations " doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_translatorInf2.xlsx</RuleFileOrStr> 
+      </TypeTranslator2>  
+      <report memo="whether report the processing details at the end">f</report> 
+    </pipeLineSetting>  
+    <annotators> 
+      <current memo="Mark current annotations with annotator: ">test4</current> 
+    </annotators>  
+    <view> 
+      <queryName memo="can be one of these three values: 'Snippet', 'DocSnippet', 'BunchDocSnippet'">Snippet</queryName> 
+    </view>  
+    <executes> 
+      <RunEasyCIE memo="Run Preannotator using current rules">edu.utah.bmi.nlp.simple.gui.tasks.RunClinicPipe db</RunEasyCIE>  
+      <ViewOutputInDB memo="View the output in database">edu.utah.bmi.simple.gui.task.ViewOutputDB</ViewOutputInDB>  
+      <RefreshDebugPipe memo="If you want to use shortcut debugging, after change the configuration files, you need manually refresh the pipeline">edu.utah.bmi.simple.gui.task.RefreshDebugPipe</RefreshDebugPipe> 
+    </executes> 
+  </easycie>  
+  <compare> 
+    <compare> 
+      <targetAnnotator memo="Compare annotations from annotator (leave it blank will use easycie's current annotator as default)"/>  
+      <targetRunId memo="run id of target annotator. Default is the latest run id when leave blank"/>  
+      <referenceAnnotator memo="Compare annotations against annotator: ">N2C2</referenceAnnotator>  
+      <referenceRunId memo="run id of reference annotator. Default is the latest run id when leave blank"/>  
+      <referenceTable>REFERENCE</referenceTable>  
+      <strictCompare>false</strictCompare>  
+      <typeFilter memo="limit the comparison to a certain type">ASP_FOR_MI_MET,ASP_FOR_MI_NOT_MET</typeFilter> 
+    </compare>  
+    <executes> 
+      <Compare memo="Compare the difference between two annotators">edu.utah.bmi.simple.gui.task.CompareBDSTask</Compare>  
+      <ViewComparedResults memo="View the output in database">edu.utah.bmi.simple.gui.task.ViewDiffDB</ViewComparedResults>  
+      <RefreshDebugPipe memo="If you want to use shortcut debugging, after change the configuration files, you need manually refresh the pipeline">edu.utah.bmi.simple.gui.task.RefreshDebugPipe</RefreshDebugPipe> 
+    </executes> 
+  </compare>  
+  <debug> 
+    <log> 
+      <Section_Detector memo="display types of sections">SectionBody,org.apache.ctakes.typesystem.type.textspan.Segment</Section_Detector>  
+      <RuSH memo="display types of RuSH (sentence segmentor and tokenizer) output">org.apache.ctakes.typesystem.type.textspan.Sentence</RuSH>  
+      <LVG_Annotator memo="display types of LVG_Annotator output"/>  
+      <POSTagger memo="display types of POSTagger output">org.apache.ctakes.typesystem.type.textspan.Sentence</POSTagger>  
+      <Chunker memo="display types of Chunker output"/>  
+      <Adjust_NP_NP memo="display types of Adjust_NP_NP output"/>  
+      <Adjust_NP_PP_NP memo="display types of Adjust_NP_PP_NP output"/>  
+      <UmlsLookupAnnotator memo="display types of UmlsLookupAnnotator output">Annotation</UmlsLookupAnnotator>  
+      <ClearNLPDependencyParserAE/>  
+      <ClearNLPSemanticRoleLabelerAE/>  
+      <ConstituencyParserAnnotator/>  
+      <GenericCleartkAnalysisEngine/>  
+      <ExtractionPrepAnnotator/>  
+      <NERCoordinator memo="display types of FastCNER output">org.apache.ctakes.typesystem.type.textsem.DiseaseDisorderMention,org.apache.ctakes.typesystem.type.textsem.SignSymptomMention</NERCoordinator>  
+      <TypeTranslator>Concept</TypeTranslator>  
+      <TemporalAnnotator memo="display types of TemporalAnnotator output">Date</TemporalAnnotator>  
+      <FastContext memo="display types of FastContext output">Concept</FastContext>  
+      <FeatureInferencer memo="display types of FeatureInferencer output">Annotation</FeatureInferencer>  
+      <AnnotationCleaner>Annotation</AnnotationCleaner>  
+      <TypeTranslator2>Annotation</TypeTranslator2>  
+      <metaStr memo="manually add metadata for debugging">DOC_ID,-1|DATASETID,-1|DOC_NAME,debug.dco|DATE,2085-01-01 00:00:00|REF_DATE,2085-06-05 00:00:00</metaStr>  
+      <ShowUimaViewer memo="if true then display UIMA annotation viewer after execution">f</ShowUimaViewer> 
+    </log>  
+    <executes> 
+      <RunEasyCIEDebugger memo="Debug using string input">edu.utah.bmi.nlp.simple.gui.tasks.RunPipeDebugger</RunEasyCIEDebugger>  
+      <RefreshDebugPipe memo="After change the configuration files, you need manually refresh the pipeline">edu.utah.bmi.nlp.simple.gui.tasks.RefreshClinicPipe</RefreshDebugPipe> 
+    </executes> 
+  </debug>  
+  <dbdebug> 
+    <log> 
+      <docId memo="document id"/>  
+      <docName memo="document name">142_0.txt</docName> 
+    </log>  
+    <executes> 
+      <RunEasyCIEDocIdDebugger memo="Debug using string input">edu.utah.bmi.simple.gui.tasks.RunDBDebugger</RunEasyCIEDocIdDebugger> 
+    </executes> 
+  </dbdebug>  
+  <export> 
+    <format> 
+      <ehost memo="the directory to save the exported ehost files" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">data/output/ehost</ehost>  
+      <brat memo="the directory to save the exported brat files" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">data/output/brat</brat>  
+      <uima memo="the directory to save the exported uima xmi files" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigDirectoryChooser">data/output/xmi</uima>  
+      <exportTypes memo="If specified, then only these types will be displayed(separate by comma). If not, only Concepts will be saved. To save document conclusion, add type Doc_BASE">Annotation</exportTypes> 
+    </format>  
+    <excel> 
+      <!--<sql>SELECT CN.PAT_ID,OUTPUT.DOC_NAME,TYPE,SNIPPET,BEGIN,END,FEATURES,NC.`TEXT` FROM IRB00097336.OUTPUT JOIN (SELECT DISTINCT DOC_NAME from IRB00097336.`OUTPUT` OU join ClinicNotes CN on OU.DOC_NAME=CN.NOTE_ID INNER JOIN NP_CN_PTIDS NP ON CN.PAT_ID=NP.PAT_ID WHERE OU.TYPE='Pos_Doc' AND annotator='v1' AND RUN_ID=43 ORDER BY RAND() LIMIT 500) DOCLIST ON OUTPUT.DOC_NAME=DOCLIST.DOC_NAME join ClinicNotes CN on OUTPUT.DOC_NAME=CN.NOTE_ID join NoteContent NC on OUTPUT.DOC_NAME=NC.NOTE_ID WHERE annotator='v2' AND RUN_ID=45</sql>  -->  
+      <!--<count>SELECT count(*) FROM IRB00097336.OUTPUT JOIN (SELECT DISTINCT DOC_NAME from IRB00097336.`OUTPUT` OU join ClinicNotes CN on OU.DOC_NAME=CN.NOTE_ID INNER JOIN NP_CN_PTIDS NP ON CN.PAT_ID=NP.PAT_ID WHERE OU.TYPE='Pos_Doc' AND annotator='v1' AND RUN_ID=43 LIMIT 500) DOCLIST ON OUTPUT.DOC_NAME=DOCLIST.DOC_NAME join ClinicNotes CN on OUTPUT.DOC_NAME=CN.NOTE_ID WHERE annotator='v2' AND RUN_ID=45</count>  -->  
+      <sql/>  
+      <exportTxtDocs>true</exportTxtDocs>  
+      <directory memo="The dirctory to save the exported excel files">data/output/excel</directory>  
+      <sampleSize memo="If &gt;0, then easyCIE will randomly sample the defined number of documents">600</sampleSize> 
+    </excel>  
+    <executes> 
+      <ExportEhost memo="Run Preannotator and export the annotation to eHOST format">edu.utah.bmi.nlp.simple.gui.tasks.RunClinicPipe ehost</ExportEhost>  
+      <OpenEhost memo="Open ehost to view the exported annotations">edu.utah.bmi.simple.gui.task.ExecuteOsCommand java -jar lib/ehost.jar -x export/format/ehost</OpenEhost>  
+      <ExportBrat memo="Run Preannotator and export the annotation to brat format">edu.utah.bmi.nlp.simple.gui.tasks.RunClinicPipe brat</ExportBrat>  
+      <ExportXMI memo="Run Preannotator and export the annotation to UIMA XMI format">edu.utah.bmi.nlp.simple.gui.tasks.RunClinicPipe xmi</ExportXMI>  
+      <ExportExcel memo="Export the annotations to excel spreadsheet">edu.utah.bmi.simple.gui.task.Export2Excel3</ExportExcel>  
+      <UIMAViewer memo="View exported UIMA annotation format">edu.utah.bmi.simple.gui.task.Viewer</UIMAViewer> 
+    </executes> 
+  </export>  
+  <settings> 
+    <import> 
+      <dbFile memo="the db file(or configuration file) used to saved the txt corpus" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser">conf/ctakes_integrate/sqliteconfig.xml</dbFile>  
+      <table memo="the table used to saved the txt corpus">DOCUMENTS</table>  
+      <datasetId memo="data set id (Default is '0'. Use to differentiate different dataset in the same table.)">N2C2</datasetId>  
+      <overwrite memo="if the table exist, whether overwrite it">true</overwrite> 
+    </import>  
+    <reference> 
+      <table>REFERENCE</table> 
+    </reference>  
+    <output> 
+      <dbFile memo="the db file(or configuration file) used to saved the outputs" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser">conf/ctakes_integrate/sqliteconfig.xml</dbFile>  
+      <snippetResultTable memo="the table used to saved the annotations">RESULT_SNIPPET</snippetResultTable>  
+      <docResultTable memo="the table used to saved the annotations">RESULT_DOC</docResultTable>  
+      <bunchResultTable memo="the table used to saved the annotations">RESULT_BUNCH</bunchResultTable>  
+      <compareTable memo="the table used to saved the annotations">DIFF</compareTable> 
+    </output>  
+    <nlpComponents> 
+      <rush memo="RuSH sentence segmenter configuration file" doubleClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileChooser" openClick="edu.utah.bmi.simple.gui.doubleclick.ConfigFileOpener">conf/ctakes_integrate/ctakes_integrate_rush.xlsx</rush> 
+    </nlpComponents>  
+    <viewer> 
+      <preTag>&lt;html&gt;&lt;head&gt; &lt;script&gt; function scrollToId() { var elmnt = document.getElementById("highlighter"); elmnt.scrollIntoView(); } &lt;/script&gt; &lt;/head&gt;&lt;body onload='scrollToId()' style="margin: 0; padding: 0"&gt; &lt;div id="mydiv"&gt;</preTag>  
+      <postTag>&lt;/div&gt; &lt;/body&gt;&lt;/html&gt;</postTag>  
+      <highlighter_begin memo="Set default color to FFFFF, then the viewer will pick one from the color pool below.">&lt;span id="highlighter" style="background-color: #ffffff"&gt;</highlighter_begin>  
+      <highlighter_end>&lt;/span&gt;</highlighter_end>  
+      <snippet_length>90</snippet_length>  
+      <limit_records>300</limit_records>  
+      <random_pick_color memo="whether randomly pick a color from the color pool below or pick in order">f</random_pick_color>  
+      <color_pool>ffa94d|efdecd|ffbf00|00ffff|9966cc|ed872d|a3c13d|a4c659|8db600|89cff0|fb8e51|7fffd4|e9d66b|87a96b|ff9966|21abcd|deb887|848482|f4c2c2|ff2052|a1caf1|007fff|b2beb5|5d8aa8</color_pool>  
+      <width memo="The column width in view table"> 
+        <ID>50</ID>  
+        <DOC_NAME>50</DOC_NAME>  
+        <BUNCH_TYPE>140</BUNCH_TYPE>  
+        <DOC_TYPE>100</DOC_TYPE>  
+        <TYPE>140</TYPE>  
+        <SNIPPET>300</SNIPPET>  
+        <DATE>100</DATE>  
+        <REF_DATE/> 
+      </width> 
+    </viewer>  
+    <help>https://github.com/jianlins/EasyCIE_GUI/wiki</help>  
+    <issues>https://github.com/jianlins/EasyCIE_GUI/issues</issues> 
+  </settings> 
+</configurations>
